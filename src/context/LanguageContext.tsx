@@ -7,7 +7,6 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-// Basic dictionary for the sidebar and header UI
 const translations: Record<string, Record<string, string>> = {
   English: {
     dashboard: 'Dashboard',
@@ -22,6 +21,8 @@ const translations: Record<string, Record<string, string>> = {
     account: 'Account',
     searchPlaceholder: 'Search workflows, logs, settings...',
     systemOnline: 'System Online',
+    settingsTitle: 'Settings',
+    settingsSubtitle: 'Manage your application preferences and system configurations.',
   },
   Spanish: {
     dashboard: 'Panel',
@@ -36,6 +37,8 @@ const translations: Record<string, Record<string, string>> = {
     account: 'Cuenta',
     searchPlaceholder: 'Buscar flujos, registros, ajustes...',
     systemOnline: 'Sistema en Línea',
+    settingsTitle: 'Ajustes',
+    settingsSubtitle: 'Administre las preferencias de su aplicación y la configuración del sistema.',
   },
   French: {
     dashboard: 'Tableau de bord',
@@ -50,6 +53,8 @@ const translations: Record<string, Record<string, string>> = {
     account: 'Compte',
     searchPlaceholder: 'Rechercher des flux...',
     systemOnline: 'En ligne',
+    settingsTitle: 'Paramètres',
+    settingsSubtitle: 'Gérez les préférences de votre application et les configurations système.',
   },
   German: {
     dashboard: 'Dashboard',
@@ -64,6 +69,8 @@ const translations: Record<string, Record<string, string>> = {
     account: 'Konto',
     searchPlaceholder: 'Suchen...',
     systemOnline: 'System Online',
+    settingsTitle: 'Einstellungen',
+    settingsSubtitle: 'Verwalten Sie Ihre Anwendungseinstellungen und Systemkonfigurationen.',
   }
 };
 
@@ -89,7 +96,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
 
-  // Translation helper function
   const t = (key: string): string => {
     return translations[language]?.[key] || translations['English']?.[key] || key;
   };

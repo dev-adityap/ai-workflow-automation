@@ -81,7 +81,7 @@ export const Analytics = () => {
 
           <div className="h-64 flex items-end justify-between gap-3 pt-6 px-2 border-b border-border">
             {[45, 62, 38, 75, 88, 94, 65, 82, 90, 78, 85, 96].map((height, idx) => (
-              <div key={idx} className="flex-1 flex flex-col items-center gap-2 group">
+              <div key={idx} className="h-full flex-1 flex flex-col justify-end items-center gap-2 group">
                 <div 
                   className="w-full bg-primary/20 group-hover:bg-primary rounded-t-lg transition-all duration-300 relative"
                   style={{ height: `${height}%` }}

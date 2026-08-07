@@ -1,6 +1,6 @@
-# 🚀 AI Workflow Automation Dashboard
+# 🚀 AI Workflow Automation 
 
-A modern AI-powered Workflow Automation Dashboard inspired by **APPSeCONNECT**, **n8n**, **Zapier**, and **Make.com**.
+A modern AI-powered Workflow Automation Dashboard inspired by  **n8n**, **Zapier**, and **Make.com**.
 
 This project allows users to visually build, manage, and monitor automation workflows using a drag-and-drop workflow builder.
 

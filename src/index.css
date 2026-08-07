@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+:root {
+  --bg-background: #0f172a;
+  --bg-card: #1e293b;
+  --bg-secondary: #334155;
+  --text-main: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border-color: #334155;
+  --primary-color: #3b82f6;
+}
+
+html.light {
+  --bg-background: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-secondary: #f1f5f9;
+  --text-main: #0f172a;
+  --text-secondary: #64748b;
+  --border-color: #cbd5e1;
+  --primary-color: #2563eb;
+}
+
+/* Global Animation Killer when disabled in settings */
+html.no-animations *, 
+html.no-animations *::before, 
+html.no-animations *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+@theme {
+  --color-background: var(--bg-background);
+  --color-card: var(--bg-card);
+  --color-secondary-background: var(--bg-secondary);
+  --color-text: var(--text-main);
+  --color-secondary-text: var(--text-secondary);
+  --color-border: var(--border-color);
+  --color-primary: var(--primary-color);
+}
+
+body {
+  background-color: var(--bg-background);
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+/* Custom React Flow Controls Theming */
+.react-flow__controls {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2) !important;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.react-flow__controls-button {
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  fill: var(--text-main) !important;
+  color: var(--text-main) !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background-color 0.2s ease;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: none !important;
+}
+
+.react-flow__controls-button:hover {
+  background-color: var(--bg-secondary) !important;
+}
+
+.react-flow__controls-button svg {
+  width: 16px !important;
+  height: 16px !important;
+  fill: var(--text-main) !important;
+}

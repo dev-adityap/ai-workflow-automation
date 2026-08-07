@@ -1,75 +1,169 @@
-# React + TypeScript + Vite
+# 🚀 AI Workflow Automation Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern AI-powered Workflow Automation Dashboard inspired by **APPSeCONNECT**, **n8n**, **Zapier**, and **Make.com**.
 
-Currently, two official plugins are available:
+This project allows users to visually build, manage, and monitor automation workflows using a drag-and-drop workflow builder.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 📸 Screenshots
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
 
-## Expanding the ESLint configuration
+### Workflow Builder
+![Workflow Builder](./screenshots/builder.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Analytics
+![Analytics](./screenshots/analytics.png)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Connected Apps
+![Connected Apps](./screenshots/connected-apps.png)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Execution Logs
+![Execution Logs](./screenshots/execution-logs.png)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Templates
+![Templates](./screenshots/templates.png)
 
+
+
+
+
+# ✨ Features
+
+- 📊 Interactive Dashboard
+- 🔄 Visual Workflow Builder
+- 🧩 Drag & Drop Nodes
+- 🤖 AI Assistant
+- 📁 Workflow Templates
+- 📈 Analytics Dashboard
+- 📜 Execution Logs
+- 🔗 Connected Apps
+- ⚙️ Settings
+- 👤 User Profile
+- 🌙 Dark Theme
+- 💾 LocalStorage Persistence
+- 📱 Responsive UI
+
+---
+
+# 🛠 Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Flow
+- React Router
+- Framer Motion
+- Recharts
+- Lucide React
+- Context API
+- LocalStorage
+
+---
+
+# 🏗 Folder Structure
+
+```text
+src/
+│
+├── components/
+├── pages/
+├── layouts/
+├── context/
+├── hooks/
+├── services/
+├── routes/
+├── assets/
+├── utils/
+├── constants/
+├── types/
+└── data/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# 🚀 Core Modules
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Dashboard
 
+- Workflow statistics
+- Success rate
+- Recent workflows
+- Quick actions
+
+### Workflow Builder
+
+- Drag & Drop Nodes
+- Node Properties
+- Save Workflow
+- Test Run
+- Duplicate Workflow
+- Clear Canvas
+
+### Templates
+
+Ready-to-use workflow templates.
+
+### Connected Apps
+
+- Slack
+- Gmail
+- GitHub
+- Stripe
+- OpenAI
+- Database
+
+### Analytics
+
+Interactive charts using Recharts.
+
+### Execution Logs
+
+Real-time execution history.
+
+### Settings
+
+Persistent application preferences.
+
+### Profile
+
+Editable user profile stored locally.
+
+---
+
+# ⚡ Future Improvements
+
+- Node.js Backend
+- MongoDB
+- JWT Authentication
+- OAuth (Google, Slack, GitHub)
+- Real AI Integration
+- Webhooks
+- Docker
+- Team Collaboration
+- Workflow Scheduling
+
+---
+
+# ▶️ Installation
+
+```bash
+git clone https://github.com/dev-adityap/ai-workflow-automation.git
+
+cd ai-workflow-automation
+
+npm install
+
+npm run dev
 ```
+
+---
+
+# 👨‍💻 Author
+
+**Aditya Panna**
+
+Built with ❤️ using React + TypeScript.

@@ -24,7 +24,7 @@ This project allows users to visually build, manage, and monitor automation work
 ![Execution Logs](./screenshots/execution-logs.png)
 
 ### Templates
-![Templates](./screenshots/templates.png)
+![Templates](./screenshots/template.png)
 
 
 

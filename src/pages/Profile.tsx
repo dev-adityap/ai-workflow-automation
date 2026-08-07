@@ -1,4 +1,4 @@
-// src/pages/Profile.tsx
+
 import { useState } from 'react';
 import { User,  Key, Save, CheckCircle2 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
@@ -10,7 +10,7 @@ export const Profile = () => {
       const saved = localStorage.getItem('user_profile');
       if (saved) return JSON.parse(saved);
     } catch {
-      // fallback
+      
     }
     return {
       name: 'Alex Rivera',

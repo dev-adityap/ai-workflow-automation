@@ -18,7 +18,7 @@ This project allows users to visually build, manage, and monitor automation work
 ![Analytics](./screenshots/analytics.png)
 
 ### Connected Apps
-![Connected Apps](./screenshots/connected-apps.png)
+![Connected Apps](./screenshots/connectedApps.png)
 
 ### Execution Logs
 ![Execution Logs](./screenshots/execution-logs.png)

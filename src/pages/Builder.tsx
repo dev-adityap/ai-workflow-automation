@@ -10,18 +10,15 @@ import { CustomNode } from '../components/nodes/CustomNode';
 import { NodePalette } from '../components/builder/NodePalette';
 import { PropertiesPanel } from '../components/builder/PropertiesPanel';
 
-const initialNodes: Node[] = [
-  { id: '1', type: 'custom', position: { x: 250, y: 100 }, data: { label: 'Gmail Arrives', type: 'trigger' } },
-  { id: '2', type: 'custom', position: { x: 250, y: 280 }, data: { label: 'AI Summarize', type: 'action' } },
-];
-const initialEdges: Edge[] = [{ id: 'e1-2', source: '1', target: '2', animated: true }];
+const initialNodes: Node[] = [];
+const initialEdges: Edge[] = [];
 
 export const Builder = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   
   const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
-  const [workflowName, setWorkflowName] = useState('AI Lead Enrichment Pipeline');
+  const [workflowName, setWorkflowName] = useState('New Workflow');
   const [isRunning, setIsRunning] = useState(false);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -143,7 +140,6 @@ export const Builder = () => {
     setEdges((eds) => [...eds, ...clonedEdges]);
   };
 
-  // Node & Edge Sequential Glowing Animation
   const handleTestRun = async () => {
     if (nodes.length === 0 || isRunning) return;
     setIsRunning(true);
@@ -163,7 +159,6 @@ export const Builder = () => {
     }
     nodes.forEach(n => !visited.has(n.id) && nodeOrder.push(n.id));
 
-    // Animate Nodes and Edges
     for (let i = 0; i < nodeOrder.length; i++) {
       const currentNode = nodeOrder[i];
       const nextNode = nodeOrder[i + 1];
@@ -183,7 +178,6 @@ export const Builder = () => {
 
     await new Promise((res) => setTimeout(res, 400));
     
-    // Reset Canvas Visuals
     setNodes((nds) => nds.map((n) => ({ ...n, data: { ...n.data, isGlowing: false } })));
     setEdges((eds) => eds.map((e) => ({ ...e, style: {} })));
     setIsRunning(false);

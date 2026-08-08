@@ -1,40 +1,28 @@
-
+// src/pages/ExecutionLogs.tsx
 import { useState, useEffect } from 'react';
-import { Activity, Clock, CheckCircle2, XCircle, Search, Trash2 } from 'lucide-react';
+import {  Clock, CheckCircle2, XCircle, Search, Trash2, Database } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
-
-// Standard fallback data for the very first time the app loads
-const defaultLogs = [
-  { id: 'log-1', workflowName: 'AI Lead Enrichment Pipeline', trigger: 'Webhook Trigger', status: 'Success', duration: '842ms', timestamp: '2 mins ago', details: 'Payload parsed and AI summarization successful.' },
-  { id: 'log-2', workflowName: 'Customer Support Triage', trigger: 'Gmail Received', status: 'Failed', duration: '124ms', timestamp: '1 hour ago', details: 'API Rate limit exceeded on OpenAI connector.' },
-];
 
 export const ExecutionLogs = () => {
   const { showToast } = useToast();
   const [searchTerm, setSearchTerm] = useState('');
   
-  // SMARTER INITIALIZATION: 
-  // It only loads default logs if the key is strictly null (never created).
-  // If it is '[]' (cleared), it will safely load the empty array.
+  // Initialize state as empty array []
   const [logs, setLogs] = useState(() => {
     try {
       const saved = localStorage.getItem('execution_logs');
-      if (saved !== null) {
-        return JSON.parse(saved); // Will return [] if cleared
-      }
+      return saved ? JSON.parse(saved) : [];
     } catch {
-      // Fallback on error
+      return [];
     }
-    return defaultLogs;
   });
 
-  // Sync state changes back to LocalStorage
   useEffect(() => {
     localStorage.setItem('execution_logs', JSON.stringify(logs));
   }, [logs]);
 
   const handleClearLogs = () => {
-    setLogs([]); // Set to empty array
+    setLogs([]); 
     showToast('All execution logs have been cleared', 'info');
   };
 
@@ -74,9 +62,14 @@ export const ExecutionLogs = () => {
 
       <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden">
         {filteredLogs.length === 0 ? (
-          <div className="p-12 text-center flex flex-col items-center justify-center text-secondary-text space-y-3">
-            <Activity size={32} className="opacity-40" />
-            <p className="text-sm font-medium">No execution logs found.</p>
+          <div className="p-16 text-center flex flex-col items-center justify-center text-secondary-text space-y-4">
+            <div className="w-16 h-16 bg-secondary-background rounded-full flex items-center justify-center text-secondary-text">
+              <Database size={24} />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-text">No logs recorded</p>
+              <p className="text-xs mt-1">Execute your first workflow in the Builder to see data appear here.</p>
+            </div>
           </div>
         ) : (
           <div className="overflow-x-auto">

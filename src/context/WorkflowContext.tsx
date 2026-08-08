@@ -25,10 +25,7 @@ export const WorkflowProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     } catch {
       // fallback
     }
-    return [
-      { id: '1', name: 'AI Lead Enrichment Pipeline', trigger: 'Webhook Trigger', status: 'Active', lastRun: '2 mins ago' },
-      { id: '2', name: 'Customer Support Triage', trigger: 'Gmail Received', status: 'Active', lastRun: '1 hour ago' },
-    ];
+    return []; // Starts completely empty for new visitors
   });
 
   useEffect(() => {

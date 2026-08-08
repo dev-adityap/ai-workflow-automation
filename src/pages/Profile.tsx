@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { User,  Key, Save, CheckCircle2 } from 'lucide-react';
+import { User, Key, Save, CheckCircle2 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 
 export const Profile = () => {
@@ -13,11 +13,11 @@ export const Profile = () => {
       
     }
     return {
-      name: 'Alex Rivera',
-      email: 'alex.rivera@aiworkflow.io',
+      name: 'Aditya Panna',
+      email: 'adityapanna009@gmail.com',
       role: 'Senior AI Automation Architect',
-      organization: 'Enterprise Neural Systems',
-      apiKeyId: 'ak_live_987654321fedcba',
+      organization: 'XYZ',
+      apiKeyId: 'ak_live_adityapanna_sec99',
     };
   });
 
@@ -32,6 +32,16 @@ export const Profile = () => {
     } catch {
       showToast('Failed to update profile.', 'error');
     }
+  };
+
+  const getInitials = (name: string) => {
+    if (!name) return 'AP';
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .substring(0, 2)
+      .toUpperCase();
   };
 
   return (
@@ -53,7 +63,7 @@ export const Profile = () => {
       {/* Avatar & Basic Info Card */}
       <div className="p-6 bg-card border border-border rounded-2xl shadow-sm flex flex-col sm:flex-row items-center gap-6">
         <div className="w-24 h-24 rounded-3xl bg-primary/10 border-2 border-primary/30 flex items-center justify-center text-primary text-3xl font-bold shadow-inner">
-          AR
+          {getInitials(profile.name)}
         </div>
         <div className="space-y-1 text-center sm:text-left">
           <div className="flex items-center justify-center sm:justify-start gap-2">

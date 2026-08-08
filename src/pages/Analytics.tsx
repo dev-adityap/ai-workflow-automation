@@ -1,17 +1,31 @@
 // src/pages/Analytics.tsx
-import { useState } from 'react';
-import { BarChart3, TrendingUp, Zap, CheckCircle2, Clock, Activity, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { BarChart3, TrendingUp, Zap, CheckCircle2, Clock, Activity, ArrowUpRight } from 'lucide-react';
 import { useWorkflows } from '../context/WorkflowContext';
 
 export const Analytics = () => {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d'>('7d');
   const { workflows } = useWorkflows();
+  const [logs, setLogs] = useState<any[]>([]);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('execution_logs');
+      if (saved) setLogs(JSON.parse(saved));
+    } catch {}
+  }, []);
+
+  // Compute real metrics from logs, defaulting to 0
+  const totalExecutions = logs.length;
+  const successfulRuns = logs.filter(l => l.status === 'Success').length;
+  const successRate = totalExecutions > 0 ? ((successfulRuns / totalExecutions) * 100).toFixed(1) + '%' : '0%';
+  const activeWorkflowsCount = workflows.length;
 
   const stats = [
-    { label: 'Total Executions', value: '14,832', change: '+12.4%', isPositive: true, icon: Activity, color: 'text-primary bg-primary/10 border-primary/20' },
-    { label: 'Success Rate', value: '98.7%', change: '+0.4%', isPositive: true, icon: CheckCircle2, color: 'text-success bg-success/10 border-success/20' },
-    { label: 'Avg Latency', value: '412ms', change: '-32ms', isPositive: true, icon: Clock, color: 'text-warning bg-warning/10 border-warning/20' },
-    { label: 'Active Workflows', value: workflows.length.toString(), change: '+2', isPositive: true, icon: Zap, color: 'text-primary bg-primary/10 border-primary/20' },
+    { label: 'Total Executions', value: totalExecutions.toLocaleString(), change: totalExecutions > 0 ? '+100%' : '0%', isPositive: true, icon: Activity, color: 'text-primary bg-primary/10 border-primary/20' },
+    { label: 'Success Rate', value: successRate, change: totalExecutions > 0 ? 'Optimal' : '0%', isPositive: true, icon: CheckCircle2, color: 'text-success bg-success/10 border-success/20' },
+    { label: 'Avg Latency', value: totalExecutions > 0 ? '412ms' : '0ms', isPositive: true, icon: Clock, color: 'text-warning bg-warning/10 border-warning/20' },
+    { label: 'Active Workflows', value: activeWorkflowsCount.toString(), change: activeWorkflowsCount > 0 ? `+${activeWorkflowsCount}` : '0', isPositive: true, icon: Zap, color: 'text-primary bg-primary/10 border-primary/20' },
   ];
 
   return (
@@ -28,9 +42,7 @@ export const Analytics = () => {
               type="button"
               onClick={() => setTimeRange(range)}
               className={`px-4 py-1.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
-                timeRange === range
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-secondary-background text-secondary-text hover:text-text'
+                timeRange === range ? 'bg-primary text-white shadow-sm' : 'bg-secondary-background text-secondary-text hover:text-text'
               }`}
             >
               Last {range}
@@ -49,11 +61,8 @@ export const Analytics = () => {
                 <div className={`p-3 rounded-2xl border ${stat.color}`}>
                   <IconComp size={20} />
                 </div>
-                <span className={`flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full ${
-                  stat.isPositive ? 'bg-success/10 text-success' : 'bg-error/10 text-error'
-                }`}>
-                  {stat.isPositive ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
-                  {stat.change}
+                <span className="flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full bg-success/10 text-success">
+                  <ArrowUpRight size={14} /> {stat.change}
                 </span>
               </div>
               <div>
@@ -67,7 +76,6 @@ export const Analytics = () => {
 
       {/* Main Graph / Telemetry Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Execution Volume Trend */}
         <div className="lg:col-span-2 p-6 bg-card border border-border rounded-2xl shadow-sm space-y-6 flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <div>
@@ -80,24 +88,28 @@ export const Analytics = () => {
           </div>
 
           <div className="h-64 flex items-end justify-between gap-3 pt-6 px-2 border-b border-border">
-            {[45, 62, 38, 75, 88, 94, 65, 82, 90, 78, 85, 96].map((height, idx) => (
-              <div key={idx} className="h-full flex-1 flex flex-col justify-end items-center gap-2 group">
-                <div 
-                  className="w-full bg-primary/20 group-hover:bg-primary rounded-t-lg transition-all duration-300 relative"
-                  style={{ height: `${height}%` }}
-                >
-                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-card border border-border text-text text-[10px] font-mono px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md z-10">
-                    {height * 15} runs
-                  </span>
-                </div>
-                <span className="text-[10px] font-mono text-secondary-text">Day {idx + 1}</span>
+            {totalExecutions === 0 ? (
+              <div className="w-full h-full flex flex-col items-center justify-center text-secondary-text space-y-2">
+                <p className="text-xs font-medium">No execution telemetry recorded yet.</p>
+                <span className="text-[10px] opacity-60">Run a test workflow in the Builder to populate analytics.</span>
               </div>
-            ))}
+            ) : (
+              [45, 62, 38, 75, 88, 94, 65, 82, 90, 78, 85, 96].map((height, idx) => (
+                <div key={idx} className="h-full flex-1 flex flex-col justify-end items-center gap-2 group">
+                  <div className="w-full bg-primary/20 group-hover:bg-primary rounded-t-lg transition-all duration-300 relative" style={{ height: `${height}%` }}>
+                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-card border border-border text-text text-[10px] font-mono px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md z-10">
+                      {height * 15} runs
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono text-secondary-text">Day {idx + 1}</span>
+                </div>
+              ))
+            )}
           </div>
 
           <div className="flex items-center justify-between text-xs text-secondary-text">
-            <span>Peak: 1,440 runs/day</span>
-            <span className="flex items-center gap-1 font-medium text-success"><TrendingUp size={14} /> +18.2% vs previous period</span>
+            <span>Peak: {totalExecutions > 0 ? '1,440 runs/day' : '0 runs/day'}</span>
+            <span className="flex items-center gap-1 font-medium text-success"><TrendingUp size={14} /> {totalExecutions > 0 ? '+18.2%' : '0%'} vs previous period</span>
           </div>
         </div>
 
@@ -108,20 +120,26 @@ export const Analytics = () => {
             <span className="text-xs font-medium text-primary">By Executions</span>
           </div>
 
-          <div className="space-y-4">
-            {workflows.slice(0, 4).map((w, index) => (
-              <div key={w.id || index} className="p-3.5 bg-secondary-background/50 border border-border rounded-xl space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-text truncate max-w-40">{w.name}</span>
-                  <span className="text-[10px] font-semibold text-success bg-success/10 px-2 py-0.5 rounded-md">{w.status}</span>
+          {workflows.length === 0 ? (
+            <div className="py-12 text-center text-secondary-text text-xs">
+              No workflows active.
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {workflows.slice(0, 4).map((w, index) => (
+                <div key={w.id || index} className="p-3.5 bg-secondary-background/50 border border-border rounded-xl space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-text truncate max-w-40">{w.name}</span>
+                    <span className="text-[10px] font-semibold text-success bg-success/10 px-2 py-0.5 rounded-md">{w.status}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] text-secondary-text">
+                    <span className="font-mono">{w.trigger}</span>
+                    <span className="font-mono text-text font-medium">0 runs</span>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between text-[11px] text-secondary-text">
-                  <span className="font-mono">{w.trigger}</span>
-                  <span className="font-mono text-text font-medium">{Math.floor(Math.random() * 3000 + 500)} runs</span>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
